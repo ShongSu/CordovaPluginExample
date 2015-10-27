@@ -20,7 +20,7 @@ How to run example?
 
 4. Add this plugin to your cordova project, type:
 
-	   cordova plugin add https://github.com/shongsu/cordova-example-plugin.git
+	    cordova plugin add https://github.com/shongsu/cordova-example-plugin.git
 
   or clone this git and add it locally, for example:
 
