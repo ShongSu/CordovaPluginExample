@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="com.shongsu.plugin.ExamplePlugin"
+    version="1.0.0">
+
+    <name>ExamplePlugin</name>
+
+  <description>
+    Cordova-Android Plugin Example
+  </description>
+
+  <js-module src="www/ExamplePlugin.js" name="ExamplePlugin">
+        <clobbers target="ExamplePlugin" />
+    </js-module>
+
+  <engines>
+    <engine name="cordova" version=">=3.0.0" />
+  </engines>
+
+  <!-- android -->
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+	    <feature name="ExamplePlugin">
+	        <param name="android-package" value="com.shongsu.plugin.ExamplePlugin"/>
+	    </feature>
+    </config-file>
+
+    <source-file src="src/android/ExamplePlugin.java" target-dir="src/com/shongsu/plugin/ExamplePlugin" />
+  </platform>
+
+  <!-- more platforms here -->
+
+</plugin>
