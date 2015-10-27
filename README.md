@@ -8,60 +8,60 @@ How to run example?
 
 1. Create a new cordova project, for example:
 
-    cordova create PluginTest com.shongsu.test PluginTest
+        cordova create PluginTest com.shongsu.test PluginTest
 
 2. Go into the directory you just created.
 
-    cd PluginTest
+        cd PluginTest
 
 3. Add Android platform.
 
-    cordova platform add android
+        cordova platform add android
 
 4. Add this plugin to your cordova project, type:
 
-	 cordova plugin add https://github.com/shongsu/cordova-example-plugin.git
+	   cordova plugin add https://github.com/shongsu/cordova-example-plugin.git
 
   or clone this git and add it locally, for example:
 
-    cordova plugin add file-path-here
+        cordova plugin add file-path-here
 
 5. Eidt your `www/index.html` file, here is full example:
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Cordova - Android Plugin Example</title>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8" />
+            <title>Cordova - Android Plugin Example</title>
 
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="plugins/SamplePlugin.js"></script>
+            <script type="text/javascript" src="cordova.js"></script>
+            <script type="text/javascript" src="plugins/SamplePlugin.js"></script>
 
-    <script type="text/javascript">
-        function onLoad() {
-            document.addEventListener('deviceready', onDeviceReady, false);
-        }
+            <script type="text/javascript">
+                function onLoad() {
+                    document.addEventListener('deviceready', onDeviceReady, false);
+                }
 
-        function onDeviceReady() {
-    var a = 5;
-    var b = 3;
-            window.func_add(a, b, function(result) { alert(a + " + " + b + " = " + result); }, function(err) { alert(err); });
-    window.func_sub(a, b, function(result) { alert(a + " - " + b + " = " + result); }, function(err) { alert(err); });
-    window.func_factorial(a, function(result) { alert(a + "! = " + result); }, function(err) { alert(err); });		
-  }
-    </script>
-</head>
+                function onDeviceReady() {
+            var a = 5;
+            var b = 3;
+                    window.func_add(a, b, function(result) { alert(a + " + " + b + " = " + result); }, function(err) { alert(err); });
+            window.func_sub(a, b, function(result) { alert(a + " - " + b + " = " + result); }, function(err) { alert(err); });
+            window.func_factorial(a, function(result) { alert(a + "! = " + result); }, function(err) { alert(err); });		
+          }
+            </script>
+        </head>
 
-<body onload="onLoad()">
-    <h1>Cordova - Android Plugin Example</h1>
-<p>
-1. a+b; <br/>
-2. a-b; <br/>
-3. a!;
-</p>
+        <body onload="onLoad()">
+            <h1>Cordova - Android Plugin Example</h1>
+        <p>
+        1. a+b; <br/>
+        2. a-b; <br/>
+        3. a!;
+        </p>
 
-</body>
-</html>
+        </body>
+        </html>
 
 6. Run application.
 
@@ -98,77 +98,77 @@ Let's take a look at plugin files:
 ExamplePlugin.java
 -----------------
 
-package com.shongsu.plugin;
+        package com.shongsu.plugin;
 
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.PluginResult;
+        import org.apache.cordova.CordovaPlugin;
+        import org.apache.cordova.CallbackContext;
+        import org.apache.cordova.PluginResult;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
 
-/**
- * This class performs sum called from JavaScript.
- */
-public class ExamplePlugin extends CordovaPlugin {
-    @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals("func_add")) {
-            Integer num1 = args.getInt(0);
-            Integer num2 = args.getInt(1);
-            this.func_add(num1, num2, callbackContext);
-            return true;
-        } else if (action.equals("func_sub")) {
-            Integer num1 = args.getInt(0);
-            Integer num2 = args.getInt(1);
-            this.func_sub(num1, num2, callbackContext);
-            return true;
-        } else if (action.equals("func_factorial")) {
-            Integer num1 = args.getInt(0);
-            this.func_factorial(num1, callbackContext);
-            return true;
-        }
+        /**
+         * This class performs sum called from JavaScript.
+         */
+        public class ExamplePlugin extends CordovaPlugin {
+            @Override
+            public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+                if (action.equals("func_add")) {
+                    Integer num1 = args.getInt(0);
+                    Integer num2 = args.getInt(1);
+                    this.func_add(num1, num2, callbackContext);
+                    return true;
+                } else if (action.equals("func_sub")) {
+                    Integer num1 = args.getInt(0);
+                    Integer num2 = args.getInt(1);
+                    this.func_sub(num1, num2, callbackContext);
+                    return true;
+                } else if (action.equals("func_factorial")) {
+                    Integer num1 = args.getInt(0);
+                    this.func_factorial(num1, callbackContext);
+                    return true;
+                }
 
-        return false;
-    }
-
-    private void func_add(Integer num1, Integer num2, CallbackContext callbackContext) {
-        if(num1 != null && num2 != null) {
-            callbackContext.success(num1 + num2);
-        } else {
-            callbackContext.error("Expected two integer arguments.");
-        }
-    }
-
-    private void func_sub(Integer num1, Integer num2, CallbackContext callbackContext) {
-        if(num1 != null && num2 != null) {
-            int s = num1 - num2;
-            callbackContext.success(s);
-        } else {
-            callbackContext.error("Expected two integer arguments.");
-        }
-    }
-
-    private void func_factorial(Integer num1, CallbackContext callbackContext) {
-        if(num1 != null && num1 >= 0) {
-            int result = 1;
-            if (num1 == 0 || num1 ==1) {
-              result = 1;
-            } else {
-              for(int i=1;i<=num1;i++)
-              {
-                result *= i;
-              }
+                return false;
             }
 
-            callbackContext.success(result);
-        } else {
-            callbackContext.error("Expected a non-negative integer argument.");
-        }
-    }
+            private void func_add(Integer num1, Integer num2, CallbackContext callbackContext) {
+                if(num1 != null && num2 != null) {
+                    callbackContext.success(num1 + num2);
+                } else {
+                    callbackContext.error("Expected two integer arguments.");
+                }
+            }
 
-}
+            private void func_sub(Integer num1, Integer num2, CallbackContext callbackContext) {
+                if(num1 != null && num2 != null) {
+                    int s = num1 - num2;
+                    callbackContext.success(s);
+                } else {
+                    callbackContext.error("Expected two integer arguments.");
+                }
+            }
+
+            private void func_factorial(Integer num1, CallbackContext callbackContext) {
+                if(num1 != null && num1 >= 0) {
+                    int result = 1;
+                    if (num1 == 0 || num1 ==1) {
+                      result = 1;
+                    } else {
+                      for(int i=1;i<=num1;i++)
+                      {
+                        result *= i;
+                      }
+                    }
+
+                    callbackContext.success(result);
+                } else {
+                    callbackContext.error("Expected a non-negative integer argument.");
+                }
+            }
+
+        }
 
 
 
@@ -208,39 +208,39 @@ You can pass any number of arguments - they are processed by execute function as
 plugin.xml
 ----------
 
-<?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    id="com.shongsu.plugin.ExamplePlugin"
-    version="1.0.0">
+        <?xml version="1.0" encoding="UTF-8"?>
+        <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+            id="com.shongsu.plugin.ExamplePlugin"
+            version="1.0.0">
 
-    <name>ExamplePlugin</name>
+            <name>ExamplePlugin</name>
 
-  <description>
-    Cordova-Android Plugin Example
-  </description>
+          <description>
+            Cordova-Android Plugin Example
+          </description>
 
-  <js-module src="www/ExamplePlugin.js" name="ExamplePlugin">
-        <clobbers target="ExamplePlugin" />
-    </js-module>
+          <js-module src="www/ExamplePlugin.js" name="ExamplePlugin">
+                <clobbers target="ExamplePlugin" />
+            </js-module>
 
-  <engines>
-    <engine name="cordova" version=">=3.0.0" />
-  </engines>
+          <engines>
+            <engine name="cordova" version=">=3.0.0" />
+          </engines>
 
-  <!-- android -->
-  <platform name="android">
-    <config-file target="res/xml/config.xml" parent="/*">
-      <feature name="ExamplePlugin">
-          <param name="android-package" value="com.shongsu.plugin.ExamplePlugin"/>
-      </feature>
-    </config-file>
+          <!-- android -->
+          <platform name="android">
+            <config-file target="res/xml/config.xml" parent="/*">
+              <feature name="ExamplePlugin">
+                  <param name="android-package" value="com.shongsu.plugin.ExamplePlugin"/>
+              </feature>
+            </config-file>
 
-    <source-file src="src/android/ExamplePlugin.java" target-dir="src/com/shongsu/plugin/ExamplePlugin" />
-  </platform>
+            <source-file src="src/android/ExamplePlugin.java" target-dir="src/com/shongsu/plugin/ExamplePlugin" />
+          </platform>
 
-  <!-- more platforms here -->
+          <!-- more platforms here -->
 
-</plugin>
+        </plugin>
 
 
 This file tells cordova how to deal with plugin. Package name, class name and (relative) paths to files are defined here. More details about plugin.xml [here](http://docs.phonegap.com/en/3.4.0/plugin_ref_spec.md.html#Plugin%20Specification).
